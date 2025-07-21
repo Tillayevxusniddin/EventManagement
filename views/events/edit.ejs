@@ -1,0 +1,17 @@
+<div class="form-container">
+    <div class="card form-card">
+        <div class="card-content">
+            <h1 class="card-title" style="text-align: center;">Tadbirni Tahrirlash</h1>
+             <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Tadbir ma'lumotlariga o'zgartirish kiriting.
+            </p>
+
+            <form action="/events/<%= event.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                <%- include('_form', { 
+                    event: event, 
+                    submitButtonText: 'O\'zgarishlarni Saqlash' 
+                }) %>
+            </form>
+        </div>
+    </div>
+</div>

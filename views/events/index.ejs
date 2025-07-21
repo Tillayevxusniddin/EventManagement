@@ -1,0 +1,39 @@
+<div class="page-header">
+    <h1 class="page-title">Bo'lajak Tadbirlar</h1>
+    <p class="page-subtitle">Shahringizdagi eng qiziqarli tadbirlarni kashf eting va ishtirok eting!</p>
+</div>
+
+<% if (events && events.length > 0) { %>
+    <div class="events-grid">
+        <%# Har bir tadbir uchun kartochka yaratamiz %>
+        <% events.forEach(event => { %>
+            <a href="/events/<%= event.id %>" class="card-link">
+                <div class="card event-card">
+                    <img src="<%= event.imageUrl || '/images/default-event.jpg' %>" alt="<%= event.name %>" class="card-image">
+                    <div class="card-content">
+                        <p class="event-date">
+                            <%= new Date(event.date).toLocaleDateString('uz-UZ', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }) %>
+                        </p>
+                        <h2 class="card-title"><%= event.name %></h2>
+                        <p class="event-location"><%= event.location %></p>
+                        
+                        <% if(event.organizer && event.organizer.profile) { %>
+                            <div class="event-organizer">
+                                <small>Tashkilotchi: <%= event.organizer.profile.firstName %> <%= event.organizer.profile.lastName %></small>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </a>
+        <% }) %>
+    </div>
+<% } else { %>
+    <div class="no-content-found">
+        <img src="/images/not-found.svg" alt="Topilmadi" class="no-content-image">
+        <h2>Hozircha rejalashtirilgan tadbirlar mavjud emas.</h2>
+        <p>Iltimos, keyinroq qayta tekshirib ko'ring yoki yangi tadbir yarating!</p>
+        <% if (currentUser && (currentUser.role === 'organizer' || currentUser.role === 'admin')) { %>
+           <a href="/events/new" class="btn btn-primary" style="margin-top: 1rem;">Yangi Tadbir Yaratish</a>
+        <% } %>
+    </div>
+<% } %>

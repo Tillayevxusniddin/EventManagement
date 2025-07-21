@@ -1,0 +1,44 @@
+<%# Bu forma ham yaratish, ham tahrirlash uchun ishlatiladi %>
+<div class="form-group">
+    <label for="name">Tadbir nomi</label>
+    <input type="text" id="name" name="name" class="form-control" value="<%= event.name || (locals.old_input && old_input.name) || '' %>" required>
+</div>
+<div class="form-group">
+    <label for="date">Sana va vaqt</label>
+    <%# Datetime-local inputi uchun to'g'ri format (YYYY-MM-DDTHH:mm) kerak %>
+    <% 
+        let dateValue = '';
+        const dateToFormat = (locals.old_input && old_input.date) || event.date;
+        if (dateToFormat) {
+            const d = new Date(dateToFormat);
+            // Vaqt zonasini hisobga olgan holda to'g'ri formatlash
+            d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+            dateValue = d.toISOString().slice(0, 16);
+        }
+    %>
+    <input type="datetime-local" id="date" name="date" class="form-control" value="<%= dateValue %>" required>
+</div>
+<div class="form-group">
+    <label for="location">Joylashuv</label>
+    <input type="text" id="location" name="location" class="form-control" value="<%= event.location || (locals.old_input && old_input.location) || '' %>" required>
+</div>
+<div class="form-group">
+    <label for="description">Tavsif</label>
+    <textarea id="description" name="description" class="form-control" rows="6" required><%= event.description || (locals.old_input && old_input.description) || '' %></textarea>
+</div>
+<div class="form-group">
+    <label for="eventImage">Tadbir Rasmi (ixtiyoriy)</label>
+    <input type="file" id="eventImage" name="eventImage" class="form-control">
+    <% if (event.imageUrl) { %>
+        <small>Hozirgi rasm: <a href="/<%= event.imageUrl %>" target="_blank">Ko'rish</a></small>
+    <% } %>
+</div>
+<div class="form-group">
+    <label for="price">Narxi (so'mda, ixtiyoriy, 0 = Bepul)</label>
+    <input type="number" id="price" name="price" class="form-control" value="<%= event.price || (locals.old_input && old_input.price) || '0' %>" placeholder="0" min="0">
+</div>
+<div class="form-group">
+    <label for="maxAttendees">Maksimal ishtirokchilar soni (ixtiyoriy)</label>
+    <input type="number" id="maxAttendees" name="maxAttendees" class="form-control" value="<%= event.maxAttendees || (locals.old_input && old_input.maxAttendees) || '' %>" placeholder="Cheklanmagan" min="1">
+</div>
+<button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;"><%= submitButtonText %></button>

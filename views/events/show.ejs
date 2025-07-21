@@ -1,0 +1,116 @@
+<%# Eng birinchi navbatda 'event' o'zgaruvchisi mavjudligini tekshiramiz %>
+<% if (event) { %>
+    <div class="event-show-page">
+
+        <%# 1. Rasm URL'ini oldindan tayyorlab olamiz %>
+        <%
+            const bgImageUrl = event.imageUrl || '/images/default-event.jpg';
+        %>
+
+        <div class="event-hero" style="background-image: url('<%- bgImageUrl %>');">
+            <div class="hero-overlay">
+                <div class="container">
+                    <h1 class="event-title"><%= event.name %></h1>
+                    <div class="event-meta">
+                        <%
+                            let formattedDate = "Noma'lum sana";
+                            if (event.date) {
+                                try {
+                                    formattedDate = new Date(event.date).toLocaleDateString('uz-UZ', {
+                                        dateStyle: 'full', timeStyle: 'short'
+                                    });
+                                } catch (e) {}
+                            }
+                            const location = event.location || "Noma'lum joy";
+                        %>
+                        <span>📅 <%= formattedDate %></span>
+                        <span>📍 <%= location %></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container event-body">
+            <div class="action-buttons">
+                <% if (currentUser && isOwner) { %>
+                    <%# Tadbir egasi va Admin uchun tugmalar %>
+                    <a href="/events/<%= event.id %>/edit" class="btn btn-secondary">Tahrirlash</a>
+        
+                    <%# YANGI TUGMA QUYIDA QO'SHILDI %>
+                    <a href="/events/<%= event.id %>/registrations" class="btn btn-info">Ishtirokchilarni ko'rish</a>
+
+                    <form action="/events/<%= event.id %>?_method=DELETE" method="POST" onsubmit="return confirm('Haqiqatan ham bu tadbirni o\'chirmoqchimisiz?');">
+                        <button type="submit" class="btn btn-danger">O'chirish</button>
+                    </form>
+                <% } else if (currentUser) { %>
+                    <% if (registration) { %>
+                         <form action="/registrations/<%= registration.id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="btn btn-warning">Ro'yxatdan o'tishni bekor qilish</button>
+                        </form>
+                    <% } else { %>
+                        <form action="/registrations" method="POST">
+                            <input type="hidden" name="eventId" value="<%= event.id %>">
+                            <button type="submit" class="btn btn-primary">Ro'yxatdan o'tish</button>
+                        </form>
+                    <% } %>
+                <% } else { %>
+                    <a href="/login" class="btn btn-primary">Ro'yxatdan o'tish uchun kiring</a>
+                <% } %>
+            </div>
+
+            <div class="event-content-grid">
+                <div class="main-content">
+                    <h2>Tadbir Haqida</h2>
+                    <p><%- event.description %></p>
+                </div>
+                <aside class="sidebar-content">
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Tafsilotlar</h3>
+                            <ul class="details-list">
+                                <% if(event.organizer && event.organizer.profile) { %>
+                                    <li><strong>Tashkilotchi:</strong> <a href="/users/<%= event.organizer.id %>"><%= event.organizer.profile.getFullName() %></a></li>
+                                <% } %>
+                                <li><strong>Narxi:</strong> <%= event.price > 0 ? event.price.toLocaleString('uz-UZ') + ' so\'m' : 'Bepul' %></li>
+                                <li><strong>O'rinlar:</strong> <%= event.maxAttendees ? event.maxAttendees + ' ta' : 'Cheklanmagan' %></li>
+                            </ul>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="comments-section">
+                <h2>Muhokama</h2>
+                <% if (currentUser) { %>
+                    <div class="comment-form-container card">
+                        <form action="/comments" method="POST">
+                            <input type="hidden" name="eventId" value="<%= event.id %>">
+                            <div class="form-group">
+                                <label for="content">Izohingizni qoldiring</label>
+                                <textarea name="content" id="content" rows="4" class="form-control" placeholder="Fikringizni yozing..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Yuborish</button>
+                        </form>
+                    </div>
+                <% } %>
+                <div class="comments-list">
+                    <% if (event.comments && event.comments.length > 0) { %>
+                        <% event.comments.forEach(comment => { %>
+                            <%- include('../partials/comment-item', { comment: comment, currentUser: currentUser, isOwner: isOwner, event: event }) %>
+                        <% }) %>
+                    <% } else { %>
+                        <p>Hali izohlar mavjud emas. Birinchi bo'lib fikr bildiring!</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<% } else { %>
+    <div class="no-content-found" style="margin-top: 5rem;">
+        <img src="/images/not-found.svg" alt="Topilmadi" class="no-content-image">
+        <h2>Kechirasiz, bunday tadbir topilmadi</h2>
+        <p>Siz qidirayotgan sahifa mavjud emas yoki o'chirilgan bo'lishi mumkin.</p>
+        <a href="/events" class="btn btn-primary" style="margin-top: 1rem;">Barcha Tadbirlarga Qaytish</a>
+    </div>
+<% } %>

@@ -1,0 +1,41 @@
+<div class="page-header">
+    <h1 class="page-title">"<%= event.name %>" Tadbiri Ishtirokchilari</h1>
+    <a href="/events/<%= event.id %>" class="btn btn-secondary btn-sm">Tadbirga Qaytish</a>
+</div>
+
+<% if (attendees && attendees.length > 0) { %>
+    <div class="card">
+        <div class="card-content">
+            <table class="attendees-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ism Familiya</th>
+                        <th>Email</th>
+                        <th>Ro'yxatdan o'tgan sana</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% attendees.forEach((reg, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td>
+                                <% if (reg.user && reg.user.profile) { %>
+                                    <a href="/users/<%= reg.user.id %>"><%= reg.user.profile.getFullName() %></a>
+                                <% } else { %>
+                                    O'chirilgan foydalanuvchi
+                                <% } %>
+                            </td>
+                            <td><%= reg.user ? reg.user.email : 'Noma\'lum' %></td>
+                            <td><%= new Date(reg.registrationDate).toLocaleString('uz-UZ') %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<% } else { %>
+    <div class="no-content-found">
+        <p>Bu tadbirga hali hech kim ro'yxatdan o'tmagan.</p>
+    </div>
+<% } %>

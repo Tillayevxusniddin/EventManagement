@@ -1,0 +1,27 @@
+<header class="navbar">
+    <div class="container">
+        <a href="/events" class="navbar-brand">EventSys</a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/events">Barcha Tadbirlar</a></li>
+                
+                <% if (currentUser) { %>                    
+                    <% if (currentUser.role === 'organizer' || currentUser.role === 'admin') { %>
+                        <li><a href="/events/new" class="btn btn-secondary">Tadbir Yaratish</a></li>
+                    <% } %>
+
+                    <li><a href="/profile">Profilim</a></li>
+                    <li>
+                        <form action="/logout?_method=POST" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-primary">Chiqish</button>
+                        </form>
+                    </li>
+
+                <% } else { %>
+                    <li><a href="/login">Kirish</a></li>
+                    <li><a href="/register" class="btn btn-primary">Ro'yxatdan o'tish</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </div>
+</header>

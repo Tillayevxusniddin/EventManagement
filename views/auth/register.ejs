@@ -1,0 +1,56 @@
+<div class="auth-container">
+    <div class="card auth-card">
+        <div class="card-content">
+            <h1 class="card-title" style="text-align: center;">Akkaunt Yaratish</h1>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Tadbir boshqaruv tizimiga qo'shilish uchun ma'lumotlarni to'ldiring.
+            </p>
+
+            <form action="/register" method="POST">
+                
+                <h2 class="form-section-title">Akkaunt Ma'lumotlari</h2>
+                <div class="form-group">
+                    <label for="username">Foydalanuvchi nomi (login)</label>
+                    <input type="text" id="username" name="username" class="form-control" value="<%= old_input.username || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Elektron pochta</label>
+                    <input type="email" id="email" name="email" class="form-control" value="<%= old_input.email || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parol (min. 6 belgi)</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Parolni tasdiqlang</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                </div>
+                
+                <hr class="form-divider">
+
+                <h2 class="form-section-title">Shaxsiy Ma'lumotlar</h2>
+                <div class="form-group">
+                    <label for="firstName">Ismingiz</label>
+                    <input type="text" id="firstName" name="firstName" class="form-control" value="<%= old_input.firstName || '' %>" required>
+                </div>
+                 <div class="form-group">
+                    <label for="lastName">Familiyangiz</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" value="<%= old_input.lastName || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefon raqam (masalan, +998901234567)</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" value="<%= old_input.phone || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Manzil</label>
+                    <textarea id="address" name="address" class="form-control" rows="3" required><%= old_input.address || '' %></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Ro'yxatdan o'tish</button>
+            </form>
+            <p style="text-align: center; margin-top: 1.5rem;">
+                Akkauntingiz bormi? <a href="/login">Tizimga kirish</a>
+            </p>
+        </div>
+    </div>
+</div>

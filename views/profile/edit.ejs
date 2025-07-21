@@ -1,0 +1,34 @@
+<div class="form-container">
+    <div class="card form-card">
+        <div class="card-content">
+            <h1 class="card-title" style="text-align: center;">Profilni Tahrirlash</h1>
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+                Shaxsiy ma'lumotlaringizni yangilang.
+            </p>
+
+            <form action="/profile/edit" method="POST">
+                <div class="form-group">
+                    <label for="firstName">Ismingiz</label>
+                    <input type="text" id="firstName" name="firstName" class="form-control" value="<%= profile.firstName || (locals.old_input && old_input.firstName) || '' %>" required>
+                </div>
+                 <div class="form-group">
+                    <label for="lastName">Familiyangiz</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control" value="<%= profile.lastName || (locals.old_input && old_input.lastName) || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefon raqam</label>
+                    <input type="tel" id="phone" name="phone" class="form-control" value="<%= profile.phone || (locals.old_input && old_input.phone) || '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Manzil</label>
+                    <textarea id="address" name="address" class="form-control" rows="3" required><%= profile.address || (locals.old_input && old_input.address) || '' %></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="bio">O'zingiz haqingizda (ixtiyoriy)</label>
+                    <textarea id="bio" name="bio" class="form-control" rows="4"><%= profile.bio || (locals.old_input && old_input.bio) || '' %></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Saqlash</button>
+            </form>
+        </div>
+    </div>
+</div>

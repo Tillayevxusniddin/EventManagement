@@ -1,0 +1,27 @@
+<div class="page-header">
+    <h1 class="page-title">Mening Tadbirlarim</h1>
+    <p class="page-subtitle">Siz ro'yxatdan o'tgan barcha tadbirlar.</p>
+</div>
+
+<% if (registrations && registrations.length > 0) { %>
+    <div class="registrations-list">
+        <% registrations.forEach(reg => { %>
+            <div class="card registration-item">
+                <div class="item-main">
+                    <a href="/events/<%= reg.event.id %>" class="item-title"><%= reg.event.name %></a>
+                    <p class="item-date"><%= new Date(reg.event.date).toLocaleString('uz-UZ', { dateStyle: 'long', timeStyle: 'short' }) %></p>
+                </div>
+                <div class="item-action">
+                    <form action="/registrations/<%= reg.id %>?_method=DELETE" method="POST">
+                        <button type="submit" class="btn btn-warning btn-sm">Bekor qilish</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+<% } else { %>
+    <div class="no-content-found">
+        <p>Siz hali hech qanday tadbirga ro'yxatdan o'tmagansiz.</p>
+        <a href="/events" class="btn btn-primary" style="margin-top: 1rem;">Tadbirlarni Ko'rish</a>
+    </div>
+<% } %>

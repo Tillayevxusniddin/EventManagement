@@ -1,0 +1,32 @@
+<%# views/error.ejs %>
+
+<div class="no-content-found" style="margin-top: 5rem;">
+    <img src="/images/error.svg" alt="Xatolik" class="no-content-image" style="max-width: 250px;">
+    
+    <h1>Xatolik: <%= title %></h1>
+    <p class="page-subtitle"><%= message %></p>
+
+    <%# `development` rejimida dasturchi uchun qo'shimcha ma'lumot chiqaramiz %>
+    <% if (locals.stack) { %>
+        <pre class="error-stack"><code><%= stack %></code></pre>
+    <% } %>
+    
+    <a href="/" class="btn btn-primary" style="margin-top: 1rem;">Bosh Sahifaga Qaytish</a>
+</div>
+
+<%# Bu sahifa uchun maxsus stil qo'shamiz. Buni style.css ga qo'shsa ham bo'ladi. %>
+<style>
+    .error-stack {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 2rem;
+        text-align: left;
+        white-space: pre-wrap;     
+        word-wrap: break-word;      
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 0.8rem;
+    }
+</style>

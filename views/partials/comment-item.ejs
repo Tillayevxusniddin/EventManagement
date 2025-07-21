@@ -1,0 +1,48 @@
+<%# Har ehtimolga qarshi, comment obyekti mavjudligini tekshiramiz %>
+<% if (comment) { %>
+<div class="comment-item" id="comment-<%= comment.id %>">
+    <div class="comment-author">
+        <%# Himoyalangan (defensive) tekshiruv: user va profile mavjudmi? %>
+        <img src="<%= (comment.user && comment.user.profile && comment.user.profile.avatar) ? comment.user.profile.avatar : '/images/default-avatar.png' %>" alt="<%= comment.user ? comment.user.username : '' %>" class="author-avatar">
+        <div class="author-info">
+            <strong><%= (comment.user && comment.user.profile) ? comment.user.profile.getFullName() : 'O\'chirilgan Foydalanuvchi' %></strong>
+            <small class="text-secondary"><%= new Date(comment.createdAt).toLocaleString('uz-UZ') %></small>
+        </div>
+    </div>
+    <div class="comment-content">
+        <p><%- comment.content %></p>
+    </div>
+    <div class="comment-actions">
+        <% if(currentUser) { %>
+            <button class="btn-reply">Javob yozish</button>
+        <% } %>
+        
+        <% if(currentUser && (comment.userId === currentUser.id || isOwner || currentUser.role === 'admin')) { %>
+            <form action="/comments/<%= comment.id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Haqiqatan ham bu izohni o\'chirmoqchimisiz?');">
+                <button type="submit" class="btn-delete-comment">O'chirish</button>
+            </form>
+        <% } %>
+    </div>
+
+    <% if(currentUser) { %>
+        <div class="reply-form-container hidden">
+             <form action="/comments" method="POST">
+                <input type="hidden" name="eventId" value="<%= event.id %>">
+                <input type="hidden" name="parentId" value="<%= comment.id %>">
+                <div class="form-group">
+                    <textarea name="content" rows="2" class="form-control" placeholder="<%= (comment.user && comment.user.profile) ? comment.user.profile.firstName : 'Foydalanuvchi' %>ga javob..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Javobni yuborish</button>
+            </form>
+        </div>
+    <% } %>
+
+    <% if (comment.replies && comment.replies.length > 0) { %>
+        <div class="comment-replies">
+            <% comment.replies.forEach(reply => { %>
+                <%- include('./comment-item', { comment: reply, currentUser: currentUser, isOwner: isOwner, event: event }) %>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+<% } %>

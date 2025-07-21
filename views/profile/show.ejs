@@ -1,0 +1,78 @@
+<% if (userProfile) { %>
+    <div class="profile-header">
+        <div class="container">
+            <img src="<%= userProfile.profile.avatar || '/images/default-avatar.png' %>" alt="<%= userProfile.username %>" class="profile-avatar">
+            <h1 class="profile-fullname"><%= userProfile.profile.getFullName() %></h1>
+            <p class="profile-username">@<%= userProfile.username %></p>
+            
+            <% if (isOwnProfile) { %>
+                <div class="profile-actions">
+                <a href="/profile/edit" class="btn btn-secondary btn-sm">Profilni Tahrirlash</a>
+                
+                <%# YANGI LINK QUYIDA QO'SHILDI %>
+                <a href="/registrations/my-registrations" class="btn btn-primary btn-sm">Mening Ro'yxatlarim</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-grid">
+            <div class="profile-main">
+                <% if (userProfile.profile.bio) { %>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Foydalanuvchi haqida</h3>
+                            <p><%= userProfile.profile.bio %></p>
+                        </div>
+                    </div>
+                <% } %>
+
+                <%# isOwnProfile faqat shaxsiy profilni ko'rganda 'true' bo'ladi %>
+                <% if (isOwnProfile && userProfile.registeredEvents.length > 0) { %>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Men Ro'yxatdan o'tgan Tadbirlar</h3>
+                            <ul class="profile-event-list">
+                                <% userProfile.registeredEvents.forEach(event => { %>
+                                    <li><a href="/events/<%= event.id %>"><%= event.name %></a></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="profile-sidebar">
+                <div class="card">
+                    <div class="card-content">
+                        <h3 class="card-title">Aloqa</h3>
+                        <ul class="details-list">
+                            <li><strong>Email:</strong> <%= userProfile.email %></li>
+                            <li><strong>Telefon:</strong> <%= userProfile.profile.phone %></li>
+                            <li><strong>Manzil:</strong> <%= userProfile.profile.address %></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <% if (userProfile.organizedEvents.length > 0) { %>
+                    <div class="card">
+                        <div class="card-content">
+                            <h3 class="card-title">Tashkil qilgan tadbirlari</h3>
+                             <ul class="profile-event-list">
+                                <% userProfile.organizedEvents.forEach(event => { %>
+                                    <li><a href="/events/<%= event.id %>"><%= event.name %></a></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+<% } else { %>
+    <div class="no-content-found">
+        <h2>Foydalanuvchi topilmadi</h2>
+        <p>Siz qidirayotgan profil mavjud emas.</p>
+    </div>
+<% } %>
