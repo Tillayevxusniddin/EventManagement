@@ -85,7 +85,6 @@ exports.showCreateForm = (req, res) => {
 
 exports.createEvent = async (req, res, next) => {
     try {
-        // Formadan keladigan har bir maydonni alohida o'zgaruvchiga olamiz
         const { name, description, date, location, price, maxAttendees } = req.body;
         let imageUrlPath = null;
 
@@ -95,7 +94,7 @@ exports.createEvent = async (req, res, next) => {
 
         await Event.create({
             name, description, date, location,
-            imageUrl: imageUrlPath, // Saqlangan fayl yo'lini yozamiz
+            imageUrl: imageUrlPath,
             price: price || 0,
             maxAttendees: maxAttendees || null,
             organizerId: req.session.userId

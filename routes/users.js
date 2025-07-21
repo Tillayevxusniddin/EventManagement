@@ -9,7 +9,7 @@ router.get('/profile/edit', isAuthenticated, userController.showEditProfileForm)
 router.post(
     '/profile/edit',
     isAuthenticated,
-    // validateProfile, // Profil ma'lumotlari validatsiyasi
+    // validateProfile, 
     userController.updateProfile
 );
 router.get('/users/:id', userController.showUserProfile);

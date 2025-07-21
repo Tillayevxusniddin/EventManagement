@@ -45,7 +45,6 @@ exports.showUserProfile = async (req, res, next) => {
             return next();
         }
 
-        // Kirgan foydalanuvchi o'zining profilini ko'rayotganini tekshirish
         const isOwnProfile = req.session.userId === req.params.id;
 
         res.render('profile/show', {
