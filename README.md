@@ -1,6 +1,19 @@
+
+
 <div align="center">
-<h1>📅 Event Management System</h1>
-<p>A full-stack event management platform built with Node.js and Express.js, allowing users to create, register for, and discuss events.</p>
+  <h1>📅 Event Management System</h1>
+  <p>A full-stack event management platform built with Node.js and Express.js, allowing users to create, register for, and discuss events.</p>
+
+  ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+  ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+  ![EJS](https://img.shields.io/badge/EJS-FFD500?style=for-the-badge&logo=ejs&logoColor=black)
+  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+  ![Sequelize](https://img.shields.io/badge/Sequelize-03AFEF?style=for-the-badge&logo=sequelize&logoColor=white)
+  ![Multer](https://img.shields.io/badge/Multer-FF9900?style=for-the-badge)
+  ![Session](https://img.shields.io/badge/Session-3E8EDE?style=for-the-badge)
+  ![MVC](https://img.shields.io/badge/MVC-ModelViewController-blue?style=for-the-badge)
+</div>
+
 
 </div>
 
